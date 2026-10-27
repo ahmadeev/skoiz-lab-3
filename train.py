@@ -1,3 +1,4 @@
+import time
 import random
 from pathlib import Path
 
@@ -57,6 +58,7 @@ train_losses, val_losses = [], []
 best_loss = float("inf")
 
 for epoch in range(EPOCHS):
+    start_time = time.perf_counter()
     model.eval()
 
     train_loss = 0
@@ -92,7 +94,8 @@ for epoch in range(EPOCHS):
         f"Epoch {epoch + 1}: "
         f"train_loss={train_loss:.3f}, "
         f"val_loss={val_loss:.3f}, "
-        f"val_accuracy={accuracy:.1%}"
+        f"val_accuracy={accuracy:.1%}, "
+        f"time={time.perf_counter() - start_time:.1f}s"
     )
 
     if val_loss < best_loss:
