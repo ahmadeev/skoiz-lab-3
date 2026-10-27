@@ -63,7 +63,7 @@ for epoch in range(EPOCHS):
 
     train_loss = 0
     for x, y in train_loader:
-        x, y = x.to(device), y.to(device) # [BATCH_SIZE,3,224,224] & [BATCH_SIZE]
+        x, y = x.to(device), y.to(device) # [BATCH_SIZE,3,224,224] & [BATCH_SIZE, len(dataset.classes)]
 
         optimizer.zero_grad()
         predictions = model(x) # [BATCH_SIZE, len(dataset.classes)]
