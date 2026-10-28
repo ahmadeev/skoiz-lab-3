@@ -1,4 +1,6 @@
-torch
-torchvision
-matplotlib
-requests
+﻿# .\.venv\Scripts\python.exe -m pip freeze |  Where-Object { $_ -match '^(torch|torchvision|matplotlib|requests)==' } | Set-Content -Encoding utf8 requirements.txt
+matplotlib==3.11.2
+requests==2.34.2
+torch==2.14.1
+torchvision==0.29.1
+scikit-learn

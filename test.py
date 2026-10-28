@@ -2,6 +2,7 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets, models
+from sklearn.metrics import ConfusionMatrixDisplay, classification_report
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -32,6 +33,8 @@ loader = DataLoader(dataset, batch_size=16)
 # 3. Проверка
 correct = 0
 index = 0
+actual_labels = []
+predicted_labels = []
 
 with torch.inference_mode():
     for x, y in loader:
@@ -48,6 +51,8 @@ with torch.inference_mode():
             probability = confidence[i].item()
 
             correct += actual == predicted
+            actual_labels.append(actual)
+            predicted_labels.append(predicted)
 
             print(
                 f"{path}: "
@@ -60,3 +65,15 @@ with torch.inference_mode():
 
 print(f"\nTest accuracy: {correct / len(dataset):.2%}")
 print(f"Correct: {correct}/{len(dataset)}")
+print("\nClassification report:")
+print(classification_report(actual_labels, predicted_labels, labels=classes))
+
+matrix = ConfusionMatrixDisplay.from_predictions(
+    actual_labels,
+    predicted_labels,
+    labels=classes,
+    display_labels=classes,
+    cmap="Blues",
+)
+matrix.figure_.tight_layout()
+matrix.figure_.savefig("results/confusion_matrix.png")
