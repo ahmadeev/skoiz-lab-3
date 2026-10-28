@@ -26,7 +26,7 @@ weights = models.ResNet18_Weights.IMAGENET1K_V1
 dataset = datasets.ImageFolder("data/test", transform=weights.transforms())
 
 assert dataset.classes == classes
-assert len(dataset) >= 1 # 50
+assert len(dataset) >= 50
 
 loader = DataLoader(dataset, batch_size=16)
 
